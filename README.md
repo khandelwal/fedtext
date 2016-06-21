@@ -5,7 +5,7 @@ A text analysis of Federal websites
 
 This uses 
 
-python 3.4.3
-scrapy
+* python 3.4.3
+* scrapy
 
 
