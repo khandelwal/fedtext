@@ -2,6 +2,8 @@ import scrapy
 from bs4 import BeautifulSoup
 from bs4.element import Comment
 
+from fedtext.items import FedTextItem
+
 class TutorialSpider(scrapy.Spider):
     name = "tutorialspider"
     allowed_domains = ['*.gov']
@@ -19,8 +21,11 @@ class TutorialSpider(scrapy.Spider):
             return element.strip()
 
     def parse(self, response):
-        soup = BeautifulSoup(response.body_as_unicode(), 'html.parser')
+        """ Callback method for parsing the response. Yields a FedTextItem.  """
+
+        soup = BeautifulSoup(response.body_as_unicode(), 'lxml')
         texts = soup.findAll(text=True)
         visible_texts = [t.strip() for t in texts if self.visible(t)]
-        print(visible_texts)
-
+        item = FedTextItem()
+        item['text_list'] = visible_texts
+        yield item
