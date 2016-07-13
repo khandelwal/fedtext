@@ -2,7 +2,7 @@ import scrapy
 from bs4 import BeautifulSoup
 from bs4.element import Comment
 
-from fedtext.items import FedTextItem
+from fedtext.items import FedtextItem
 
 class TutorialSpider(scrapy.Spider):
     name = "tutorialspider"
@@ -21,11 +21,11 @@ class TutorialSpider(scrapy.Spider):
             return element.strip()
 
     def parse(self, response):
-        """ Callback method for parsing the response. Yields a FedTextItem.  """
+        """ Callback method for parsing the response. Yields a FedtextItem.  """
 
         soup = BeautifulSoup(response.body_as_unicode(), 'lxml')
         texts = soup.findAll(text=True)
         visible_texts = [t.strip() for t in texts if self.visible(t)]
-        item = FedTextItem()
+        item = FedtextItem()
         item['text_list'] = visible_texts
         yield item
