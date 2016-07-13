@@ -17,7 +17,7 @@ class TutorialSpider(scrapy.Spider):
         #with open('urls.txt, 'rb') as urls:
         #    for url in urls:
         #        yield Request(url, self.parse)
-        for url in urls:
+        for url in start_urls:
             yield Request(url, self.parse)
 
     def visible(self, element):
