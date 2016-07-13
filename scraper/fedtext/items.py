@@ -15,3 +15,4 @@ class FedtextItem(scrapy.Item):
     link = scrapy.Field()
     desc = scrapy.Field()
     text_list = scrapy.Field()
+    page_body = scrapy.Field()
