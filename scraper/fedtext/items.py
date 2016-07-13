@@ -14,4 +14,4 @@ class FedtextItem(scrapy.Item):
     title = scrapy.Field()
     link = scrapy.Field()
     desc = scrapy.Field()
-    pass
+    text_list = scrapy.Field()
