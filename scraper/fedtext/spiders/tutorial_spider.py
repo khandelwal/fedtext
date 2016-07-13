@@ -2,12 +2,23 @@ import scrapy
 from bs4 import BeautifulSoup
 from bs4.element import Comment
 
+from scrapy.http.request import Request
+
 from fedtext.items import FedtextItem
 
 class TutorialSpider(scrapy.Spider):
     name = "tutorialspider"
     allowed_domains = ['*.gov']
-    start_urls = ['http://www.recreation.gov']
+    start_urls = []
+
+    def start_requests(self):
+        start_urls = ['http://www.recreation.gov']
+        #from: http://stackoverflow.com/questions/9322219/how-to-generate-the-start-urls-dynamically-in-crawling
+        #with open('urls.txt, 'rb') as urls:
+        #    for url in urls:
+        #        yield Request(url, self.parse)
+        for url in urls:
+            yield Request(url, self.parse)
 
     def visible(self, element):
         """ Return True if the element text is visible (in the rendered sense),
