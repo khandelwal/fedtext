@@ -11,6 +11,7 @@ class TutorialSpider(scrapy.Spider):
     allowed_domains = ['*.gov']
     start_urls = []
 
+    # Overrride this function in the base class to populate start_urls dynamically 
     def start_requests(self):
         start_urls = ['http://www.recreation.gov']
         #from: http://stackoverflow.com/questions/9322219/how-to-generate-the-start-urls-dynamically-in-crawling
