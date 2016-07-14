@@ -40,6 +40,8 @@ class TutorialSpider(scrapy.Spider):
         visible_texts = [t.strip() for t in texts if self.visible(t)]
         item = FedtextItem()
         item['text_list'] = visible_texts
-
-        item['page_body'] = response.xpath('/html/body/text()').extract()
+        item['word_list'] = []
+        item['word_frequency'] = []
+        item['link'] = response.url
+        item['title'] = soup.title.text
         yield item

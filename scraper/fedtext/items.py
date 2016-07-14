@@ -13,6 +13,6 @@ class FedtextItem(scrapy.Item):
     # name = scrapy.Field()
     title = scrapy.Field()
     link = scrapy.Field()
-    desc = scrapy.Field()
     text_list = scrapy.Field()
-    page_body = scrapy.Field()
+    word_list = scrapy.Field()
+    word_frequency = scrapy.Field()
