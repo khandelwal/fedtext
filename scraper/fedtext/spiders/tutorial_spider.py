@@ -1,4 +1,5 @@
 import scrapy
+import csv
 from bs4 import BeautifulSoup
 from bs4.element import Comment
 
@@ -13,13 +14,13 @@ class TutorialSpider(scrapy.Spider):
 
     # Overrride this function in the base class to populate start_urls dynamically 
     def start_requests(self):
-        start_urls = ['http://www.recreation.gov']
+        #start_urls = ['http://www.recreation.gov']
         #from: http://stackoverflow.com/questions/9322219/how-to-generate-the-start-urls-dynamically-in-crawling
-        #with open('urls.txt, 'rb') as urls:
-        #    for url in urls:
-        #        yield Request(url, self.parse)
-        for url in start_urls:
-            yield Request(url, self.parse)
+        with open('../../../current-federal.csv', 'rb') as data_file:
+            url_reader = csv.DictReader(data_file)
+            for row in url_reader:
+                url = "".join( [ "http://", row['Domain Name'] ] )
+                yield Request( url, self.parse)
 
     def visible(self, element):
         """ Return True if the element text is visible (in the rendered sense),
