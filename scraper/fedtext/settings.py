@@ -61,9 +61,18 @@ NEWSPIDER_MODULE = 'fedtext.spiders'
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'fedtext.pipelines.SomePipeline': 300,
-#}
+###
+### Per Above: The integer values you assign to classes in this setting determine the order 
+###            in which they run: items go through from lower valued to higher valued classes.
+###
+ITEM_PIPELINES = {
+    'fedtext.pipelines.Clean': 100,
+    'fedtext.pipelines.Remove': 200,
+    'fedtext.pipelines.Split': 300,
+    'fedtext.pipelines.Filter': 400,
+    'fedtext.pipelines.FrequencyCount': 500,
+    'fedtext.pipelines.Final': 1000
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
