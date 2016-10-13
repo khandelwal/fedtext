@@ -12,15 +12,22 @@ class TutorialSpider(scrapy.Spider):
     allowed_domains = ['*.gov']
     start_urls = []
 
-    # Overrride this function in the base class to populate start_urls dynamically 
+    def __init__(self, *args, **kwargs):
+        super(TutorialSpider, self).__init__(*args, **kwargs)
+
+        #Get the file containing a list of URLs from the command line.
+        self.file_with_urls = kwargs.get('url_file')
+        
+
     def start_requests(self):
+        """ Populate start_urls dynamically """
         #start_urls = ['http://www.recreation.gov']
         #from: http://stackoverflow.com/questions/9322219/how-to-generate-the-start-urls-dynamically-in-crawling
-        with open('../../../current-federal.csv', 'rb') as data_file:
+        with open(self.file_with_urls, 'r') as data_file:
             url_reader = csv.DictReader(data_file)
             for row in url_reader:
-                url = "".join( [ "http://", row['Domain Name'] ] )
-                yield Request( url, self.parse)
+                url = "".join([ "http://", row['Domain Name']])
+                yield Request(url, self.parse)
 
     def visible(self, element):
         """ Return True if the element text is visible (in the rendered sense),
