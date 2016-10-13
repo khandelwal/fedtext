@@ -3,10 +3,13 @@ A text analysis of Federal websites
 
 ## Installation
 
-This uses 
+See requirements.txt for the libraries this uses. 
 
-* python 3.4.3
-* scrapy
+For nltk, you'll need to download the stopwords copora. Open a Python 
+console and do the following: 
+
+>>> import nltk
+>>> nltk.download("stopwords")
 
 ## Sample Run Commands
 * `scrapy crawl tutorialspider`
