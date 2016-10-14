@@ -1,11 +1,24 @@
 import scrapy
 import csv
 from bs4 import BeautifulSoup
-from bs4.element import Comment
+from bs4.element import Comment, Doctype
 
 from scrapy.http.request import Request
 
 from fedtext.items import FedtextItem
+
+def visible(element):
+    """ Return True if the element text is visible (in the rendered sense),
+    False otherwise. This returns False on empty strings """
+
+    not_visible = ['style', 'script', '[document]', 'head', 'title']
+
+    if element.parent.name in not_visible:
+        return False
+    elif isinstance(element, Comment) or isinstance(element, Doctype):
+        return False
+    else:
+        return element.strip()
 
 
 class TutorialSpider(scrapy.Spider):
@@ -29,19 +42,6 @@ class TutorialSpider(scrapy.Spider):
                 url = "".join(["http://", row['Domain Name']])
                 yield Request(url, self.parse)
 
-    def visible(self, element):
-        """ Return True if the element text is visible (in the rendered sense),
-        False otherwise. This returns False on empty strings """
-
-        not_visible = ['style', 'script', '[document]', 'head', 'title']
-
-        if element.parent.name in not_visible:
-            return False
-        elif isinstance(element, Comment):
-            return False
-        else:
-            return element.strip()
-
     def parse(self, response):
         """
             Callback method for parsing the response. Yields a FedtextItem.
@@ -49,11 +49,15 @@ class TutorialSpider(scrapy.Spider):
 
         soup = BeautifulSoup(response.body_as_unicode(), 'lxml')
         texts = soup.findAll(text=True)
-        visible_texts = [t.strip() for t in texts if self.visible(t)]
+
+        # Remove duplicate statements, only grab what's visible
+        visible_texts = list(set([t.strip() for t in texts if visible(t)]))
+        
         item = FedtextItem()
         item['text_list'] = visible_texts
         item['word_list'] = []
         item['word_frequency'] = []
         item['link'] = response.url
         item['title'] = soup.title.text
+
         yield item
