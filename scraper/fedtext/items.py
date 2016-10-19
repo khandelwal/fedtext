@@ -9,10 +9,13 @@ import scrapy
 
 
 class FedtextItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
     title = scrapy.Field()
-    link = scrapy.Field()
+
+    # This is the final URL after all redirects
+    response_url = scrapy.Field()
+
+    # The original URL we made our request with
+    request_url = scrapy.Field()
     text_list = scrapy.Field()
     word_list = scrapy.Field()
     word_frequency = scrapy.Field()
