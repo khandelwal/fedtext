@@ -33,12 +33,9 @@ tokenizer = RegexpTokenizer("[\w']+")
 
 
 class Clean(object):
-    ''' Used in pipeline processing to split words '''
-    def process_item(self, item, spider):
-        # Note: as of now this removes some signal from "word frequency"
-        # because repeated phrases will be lost however repeated words in
-        # different phrases won't be lost
 
+    def process_item(self, item, spider):
+        """ Remove repeated phrases. """
         item['text_list'] = list(set(item['text_list']))
         return item
 
@@ -47,7 +44,7 @@ class Clean(object):
 class Remove(object):
     """ Used in pipeline processing to remove any particularly non-words """
     # This may have to become a regexp e.g. "starts with" or something in the future
-    dead_text = [u'html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"', u'|']
+    dead_text = [u'|']
 
     def process_item(self, item, spider):
         item['text_list'] = [word for word in item['text_list']
