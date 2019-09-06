@@ -1,4 +1,0 @@
-https://github.com/GSA/data/tree/gh-pages/dotgov-domains
-
-Current Federal Data from:
-https://raw.githubusercontent.com/GSA/data/gh-pages/dotgov-domains/current-federal.csv

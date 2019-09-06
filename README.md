@@ -14,3 +14,7 @@ console and do the following:
 ## Sample Run Commands
 * `scrapy crawl tutorialspider`
 * `scrapy crawl tutorialspider -o items.json`
+https://github.com/GSA/data/tree/gh-pages/dotgov-domains
+
+## Current Federal Data optained from:
+* https://raw.githubusercontent.com/GSA/data/gh-pages/dotgov-domains/current-federal.csv
